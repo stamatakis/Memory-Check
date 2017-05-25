@@ -1,0 +1,34 @@
+Michael Stamatakis
+10-3-14
+CPSC 3220
+project 1
+
+
+
+Project Description:
+
+  Leakcount is set up to run another program in execve, while using a shim
+   library to bypass the original function calls. This allows us to keep track 
+   of the memory allocated and freed throughout the process.
+
+  Sctracer runs another program or command in execvpe and counts how many
+times each system call was made.
+
+KNOWN PROBLEMS:
+
+It appears to be working well, but I guess we'll find out after some more 
+testing...
+
+DESIGN:
+
+leakcount:   I used fork() and execve to set up the child process with the 
+shim library set to supercede the standard library. I designed a linked list to
+ hold the data, placing the head node in the global scope of my shim library. 
+ I created and wrote to a file from the shim library, which was opened by 
+ leakcount upon completion of execve.
+
+sctracer:    I used strtok() to parse the args and separate any that contained
+multiple commands. These were then passed on to execvpe in order to be 
+processed. We then create a loop to keep track of the sys_calls and their 
+frequency within a linked lis.
+
